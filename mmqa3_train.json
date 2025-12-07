@@ -1,0 +1,1607 @@
+[
+  {
+    "id": 219,
+    "db_id": "icfp_1",
+    "question": "List the first names and last names of all authors who were the primary authors (authOrder = 1) of papers published from institutions located in the USA.",
+    "sql": "SELECT A.fname, A.lname FROM Authors A JOIN Authorship AU ON A.authID = AU.authID JOIN Inst I ON AU.instID = I.instID WHERE I.country = 'USA' AND AU.authOrder = 1;",
+    "table_names": [
+      "Inst",
+      "Authors",
+      "Authorship"
+    ]
+  },
+  {
+    "id": 348,
+    "db_id": "hospital_1",
+    "question": "What are the names of physicians and procedures in which they are trained that cost more than $5000?",
+    "sql": "SELECT Physician.Name, Procedures.Name FROM Physician JOIN Trained_In ON Physician.EmployeeID = Trained_In.Physician JOIN Procedures ON Trained_In.Treatment = Procedures.Code WHERE Procedures.Cost > 5000;",
+    "table_names": [
+      "Physician",
+      "Procedures",
+      "Trained_In"
+    ]
+  },
+  {
+    "id": 452,
+    "db_id": "college_3",
+    "question": "List the last names and ranks of faculty members who have secondary appointments in the Computer Science department and whose offices are located in the Krieger building.",
+    "sql": "SELECT Faculty.Lname, Faculty.Rank FROM Faculty JOIN Member_of ON Faculty.FacID = Member_of.FacID JOIN Department ON Member_of.DNO = Department.DNO WHERE Department.DName='Computer Science' AND Faculty.Building='Krieger' AND Member_of.Appt_Type='Secondary';",
+    "table_names": [
+      "Faculty",
+      "Department",
+      "Member_of"
+    ]
+  },
+  {
+    "id": 646,
+    "db_id": "tracking_orders",
+    "question": "How many distinct orders that have status 'On Road' contain products named 'phone'?",
+    "sql": "SELECT COUNT(DISTINCT oi.order_id) FROM Order_Items oi JOIN Products p ON oi.product_id = p.product_id JOIN Orders o ON oi.order_id = o.order_id WHERE p.product_name = 'phone' AND o.order_status = 'On Road';",
+    "table_names": [
+      "Orders",
+      "Products",
+      "Order_Items"
+    ]
+  },
+  {
+    "id": 464,
+    "db_id": "customers_and_addresses",
+    "question": "What hardware products have been sold in orders with 'Completed' status?",
+    "sql": "SELECT DISTINCT Products.product_name FROM Products JOIN Order_Items ON Products.product_id = Order_Items.product_id JOIN Customer_Orders ON Order_Items.order_id = Customer_Orders.order_id WHERE Customer_Orders.order_status_code = 'Completed' AND Products.product_type_code = 'Hardware';",
+    "table_names": [
+      "Products",
+      "Customer_Orders",
+      "Order_Items"
+    ]
+  },
+  {
+    "id": 218,
+    "db_id": "icfp_1",
+    "question": "Which institution is associated with the author 'Ahmed' who was the first author of a paper?",
+    "sql": "SELECT i.name FROM Inst AS i JOIN Authorship AS au ON i.instID = au.instID JOIN Authors AS a ON a.authID = au.authID WHERE a.lname = 'Ahmed' AND au.authOrder = 1;",
+    "table_names": [
+      "Inst",
+      "Authors",
+      "Authorship"
+    ]
+  },
+  {
+    "id": 383,
+    "db_id": "club_1",
+    "question": "List the first name, last name, gender, and city code of female students who are members of the club named 'Bootup Baltimore'.",
+    "sql": "SELECT s.Fname, s.LName, s.Sex, s.city_code FROM Student s JOIN Member_of_club m ON s.StuID = m.StuID JOIN Club c ON m.ClubID = c.ClubID WHERE c.ClubName = 'Bootup Baltimore' AND s.Sex = 'F';",
+    "table_names": [
+      "Student",
+      "Club",
+      "Member_of_club"
+    ]
+  },
+  {
+    "id": 360,
+    "db_id": "hospital_1",
+    "question": "Which physicians are affiliated with the General Medicine department but do not have it as their primary affiliation?",
+    "sql": "SELECT p.Name FROM Physician p JOIN Affiliated_With aw ON p.EmployeeID = aw.Physician JOIN Department d ON aw.Department = d.DepartmentID WHERE d.Name = 'General Medicine' AND aw.PrimaryAffiliation = 0;",
+    "table_names": [
+      "Physician",
+      "Department",
+      "Affiliated_With"
+    ]
+  },
+  {
+    "id": 104,
+    "db_id": "small_bank_1",
+    "question": "Who has more than 100000 in savings and also more than 5000 in checking account?",
+    "sql": "SELECT name FROM ACCOUNTS WHERE custid IN (SELECT custid FROM SAVINGS WHERE balance > 100000) AND custid IN (SELECT custid FROM CHECKING WHERE balance > 5000);",
+    "table_names": [
+      "ACCOUNTS",
+      "SAVINGS",
+      "CHECKING"
+    ]
+  },
+  {
+    "id": 362,
+    "db_id": "hospital_1",
+    "question": "What medication was prescribed to Dennis Doe on April 30, 2008?",
+    "sql": "SELECT Medication.Name FROM Medication INNER JOIN Prescribes ON Medication.Code = Prescribes.Medication INNER JOIN Patient ON Prescribes.Patient = Patient.SSN WHERE Patient.Name = 'Dennis Doe' AND Prescribes.Date = '2008-04-30 16:53';",
+    "table_names": [
+      "Patient",
+      "Medication",
+      "Prescribes"
+    ]
+  },
+  {
+    "id": 223,
+    "db_id": "icfp_1",
+    "question": "Who is the first author (full name) of the paper titled 'Binders Unbound'?",
+    "sql": "SELECT A.fname, A.lname FROM Authors A JOIN Authorship AU ON A.authID = AU.authID JOIN Papers P ON AU.paperID = P.paperID WHERE P.title = 'Binders Unbound' ORDER BY AU.authOrder ASC LIMIT 1;",
+    "table_names": [
+      "Authors",
+      "Papers",
+      "Authorship"
+    ]
+  },
+  {
+    "id": 499,
+    "db_id": "shop_membership",
+    "question": "What are the names of members with level 6 who registered at branches located in London in the year 2016?",
+    "sql": "SELECT m.Name FROM member m JOIN membership_register_branch mb ON m.Member_ID = mb.Member_ID JOIN branch b ON mb.Branch_ID = b.Branch_ID WHERE b.City = 'London' AND m.Level = 6 AND mb.Register_Year = '2016';",
+    "table_names": [
+      "member",
+      "branch",
+      "membership_register_branch"
+    ]
+  },
+  {
+    "id": 440,
+    "db_id": "company_office",
+    "question": "Which companies have office locations in buildings located in Mexico City with more than 50 stories?",
+    "sql": "SELECT C.name FROM Companies C WHERE C.id IN (SELECT O.company_id FROM Office_locations O WHERE O.building_id IN (SELECT id FROM buildings WHERE City = 'Mexico City' AND Stories > 50));",
+    "table_names": [
+      "buildings",
+      "Companies",
+      "Office_locations"
+    ]
+  },
+  {
+    "id": 633,
+    "db_id": "train_station",
+    "question": "Which trains stop at the station having the highest number of platforms?",
+    "sql": "SELECT t.Name FROM train t JOIN train_station ts ON t.Train_ID = ts.Train_ID JOIN station s ON ts.Station_ID = s.Station_ID WHERE s.Number_of_Platforms = (SELECT MAX(Number_of_Platforms) FROM station);",
+    "table_names": [
+      "station",
+      "train",
+      "train_station"
+    ]
+  },
+  {
+    "id": 112,
+    "db_id": "small_bank_1",
+    "question": "What are the names of the customers who have savings accounts with balances greater than 50000 and checking accounts with at least 5000?",
+    "sql": "SELECT A.name FROM ACCOUNTS A JOIN SAVINGS S ON A.custid = S.custid JOIN CHECKING C ON A.custid = C.custid WHERE S.balance > 50000 AND C.balance >= 5000;",
+    "table_names": [
+      "ACCOUNTS",
+      "SAVINGS",
+      "CHECKING"
+    ]
+  },
+  {
+    "id": 358,
+    "db_id": "hospital_1",
+    "question": "What is the total cost for all procedures that Christopher Turk is certified to perform as of December 31, 2008?",
+    "sql": "SELECT SUM(p.Cost) FROM Procedures p JOIN Trained_In t ON p.Code = t.Treatment JOIN Physician ph ON ph.EmployeeID = t.Physician WHERE ph.Name = 'Christopher Turk' AND t.CertificationExpires >= '2008-12-31';",
+    "table_names": [
+      "Physician",
+      "Procedures",
+      "Trained_In"
+    ]
+  },
+  {
+    "id": 290,
+    "db_id": "college_1",
+    "question": "How many unique students are enrolled in at least one course offered by the CIS department?",
+    "sql": "SELECT COUNT(DISTINCT E.STU_NUM) FROM ENROLL E JOIN CLASS CL ON E.CLASS_CODE = CL.CLASS_CODE JOIN COURSE CR ON CL.CRS_CODE = CR.CRS_CODE WHERE CR.DEPT_CODE = 'CIS';",
+    "table_names": [
+      "CLASS",
+      "COURSE",
+      "ENROLL",
+      "STUDENT"
+    ]
+  },
+  {
+    "id": 200,
+    "db_id": "news_report",
+    "question": "What is the name of the event where Jackie Waring served as a host?",
+    "sql": "SELECT e.Name FROM event e JOIN news_report n ON e.Event_ID = n.Event_ID JOIN journalist j ON n.journalist_ID = j.journalist_ID WHERE j.Name = 'Jackie Waring' AND n.Work_Type = 'Host';",
+    "table_names": [
+      "event",
+      "journalist",
+      "news_report"
+    ]
+  },
+  {
+    "id": 390,
+    "db_id": "club_1",
+    "question": "How many unique students from Baltimore are members of any clubs?",
+    "sql": "SELECT COUNT(DISTINCT c.StuID) FROM Student AS s JOIN Member_of_club AS c ON s.StuID = c.StuID WHERE s.city_code = 'BAL';",
+    "table_names": [
+      "Student",
+      "Club",
+      "Member_of_club"
+    ]
+  },
+  {
+    "id": 697,
+    "db_id": "course_teach",
+    "question": "Who are the teachers assigned to the Math course?",
+    "sql": "SELECT Name FROM teacher WHERE Teacher_ID IN (SELECT Teacher_ID FROM course_arrange WHERE Course_ID IN (SELECT Course_ID FROM course WHERE Course = 'Math'));",
+    "table_names": [
+      "course",
+      "teacher",
+      "course_arrange"
+    ]
+  },
+  {
+    "id": 470,
+    "db_id": "aircraft",
+    "question": "Which airport has the highest total maximum gross weight from the aircraft assigned to it?",
+    "sql": "SELECT a.Airport_Name, SUM(ar.Max_Gross_Weight) AS total_weight FROM airport_aircraft aa JOIN airport a ON aa.Airport_ID = a.Airport_ID JOIN aircraft ar ON aa.Aircraft_ID = ar.Aircraft_ID GROUP BY a.Airport_Name ORDER BY total_weight DESC LIMIT 1",
+    "table_names": [
+      "aircraft",
+      "airport",
+      "airport_aircraft"
+    ]
+  },
+  {
+    "id": 15,
+    "db_id": "flight_1",
+    "question": "List all the employees who have a certificate for an aircraft with a flight distance greater than 6000 miles and have a salary above $200,000.",
+    "sql": "SELECT e.ename FROM employee e JOIN certificate c ON e.eid = c.eid JOIN aircraft a ON c.aid = a.aid WHERE a.distance > 6000 AND e.salary > 200000;",
+    "table_names": [
+      "aircraft",
+      "employee",
+      "certificate"
+    ]
+  },
+  {
+    "id": 81,
+    "db_id": "college_2",
+    "question": "What are the names of students who have taken Statistics courses?",
+    "sql": "SELECT T3.name FROM course AS T1 JOIN takes AS T2 ON T1.course_id  =  T2.course_id JOIN student AS T3 ON T2.id  =  T3.id WHERE T1.dept_name  =  'Statistics'",
+    "table_names": [
+      "course",
+      "student",
+      "takes"
+    ]
+  },
+  {
+    "id": 516,
+    "db_id": "products_gen_characteristics",
+    "question": "Which products have a 'high' value for the characteristic named 'slow'?",
+    "sql": "SELECT P.product_name FROM Products P JOIN Product_Characteristics PC ON P.product_id = PC.product_id JOIN Characteristics C ON PC.characteristic_id = C.characteristic_id WHERE C.characteristic_name = 'slow' AND PC.product_characteristic_value = 'high';",
+    "table_names": [
+      "Characteristics",
+      "Products",
+      "Product_Characteristics"
+    ]
+  },
+  {
+    "id": 226,
+    "db_id": "icfp_1",
+    "question": "What are the titles of the papers authored by researchers affiliated with institutions from Japan?",
+    "sql": "SELECT Papers.title FROM Papers JOIN Authorship ON Papers.paperID = Authorship.paperID JOIN Inst ON Authorship.instID = Inst.instID WHERE Inst.country = 'Japan';",
+    "table_names": [
+      "Inst",
+      "Papers",
+      "Authorship"
+    ]
+  },
+  {
+    "id": 408,
+    "db_id": "club_1",
+    "question": "List the names, clubs, and positions of students who are members of any club and originate from the city code 'BAL'.",
+    "sql": "SELECT s.Fname, s.LName, c.ClubName, m.Position FROM Student s JOIN Member_of_club m ON s.StuID = m.StuID JOIN Club c ON m.ClubID = c.ClubID WHERE s.city_code = 'BAL';",
+    "table_names": [
+      "Student",
+      "Club",
+      "Member_of_club"
+    ]
+  },
+  {
+    "id": 241,
+    "db_id": "icfp_1",
+    "question": "Who is the second author of the paper titled 'Functional Pearl: Modular Rollback through Control Logging'?",
+    "sql": "SELECT a.fname, a.lname FROM Authors a JOIN Authorship au ON a.authID = au.authID JOIN Papers p ON au.paperID = p.paperID WHERE p.title = 'Functional Pearl: Modular Rollback through Control Logging' AND au.authOrder = 2;",
+    "table_names": [
+      "Authors",
+      "Papers",
+      "Authorship"
+    ]
+  },
+  {
+    "id": 340,
+    "db_id": "hospital_1",
+    "question": "Which physicians prescribed medications manufactured by the brand 'Foo Labs'?",
+    "sql": "SELECT DISTINCT Physician.Name FROM Physician JOIN Prescribes ON Physician.EmployeeID = Prescribes.Physician JOIN Medication ON Prescribes.Medication = Medication.Code WHERE Medication.Brand = 'Foo Labs';",
+    "table_names": [
+      "Physician",
+      "Medication",
+      "Prescribes"
+    ]
+  },
+  {
+    "id": 600,
+    "db_id": "customers_and_addresses",
+    "question": "Which customers who paid by cheque have cancelled orders containing product ID 2?",
+    "sql": "SELECT Customers.customer_name FROM Customers INNER JOIN Customer_Orders ON Customers.customer_id = Customer_Orders.customer_id INNER JOIN Order_Items ON Customer_Orders.order_id = Order_Items.order_id WHERE Customer_Orders.order_status = 'Cancelled' AND Order_Items.product_id = 2 AND Customers.payment_method = 'Cheque';",
+    "table_names": [
+      "Customers",
+      "Customer_Orders",
+      "Order_Items"
+    ]
+  },
+  {
+    "id": 392,
+    "db_id": "club_1",
+    "question": "How many students live in the same cities where the clubs are located and also hold a position in any club?",
+    "sql": "SELECT COUNT(*) FROM Student WHERE city_code IN (SELECT ClubLocation FROM Club) AND StuID IN (SELECT StuID FROM Member_of_club);",
+    "table_names": [
+      "Student",
+      "Club",
+      "Member_of_club"
+    ]
+  },
+  {
+    "id": 190,
+    "db_id": "party_host",
+    "question": "Which party theme had a host with Hungarian nationality serving as the main in charge?",
+    "sql": "SELECT p.Party_Theme FROM party p JOIN party_host ph ON p.Party_ID = ph.Party_ID JOIN host h ON ph.Host_ID = h.Host_ID WHERE h.Nationality = 'Hungary' AND ph.Is_Main_in_Charge = 'T'",
+    "table_names": [
+      "party",
+      "host",
+      "party_host"
+    ]
+  },
+  {
+    "id": 515,
+    "db_id": "products_gen_characteristics",
+    "question": "What are the names of the products with a red color whose descriptions match Grade type characteristics?",
+    "sql": "SELECT p.product_name FROM Products p JOIN Ref_Colors rc ON p.color_code = rc.color_code JOIN Characteristics c ON c.characteristic_name = p.product_description WHERE rc.color_description = 'red' AND c.characteristic_type_code = 'Grade';",
+    "table_names": [
+      "Ref_Colors",
+      "Characteristics",
+      "Products",
+      "Product_Characteristics"
+    ]
+  },
+  {
+    "id": 13,
+    "db_id": "flight_1",
+    "question": "Which employee has certificates for aircrafts that have the highest average flying distance, and what is this average flying distance?",
+    "sql": "SELECT e.ename, AVG(a.distance) AS avg_distance FROM employee e JOIN certificate c ON e.eid = c.eid JOIN aircraft a ON c.aid = a.aid GROUP BY e.eid, e.ename ORDER BY avg_distance DESC LIMIT 1;",
+    "table_names": [
+      "aircraft",
+      "employee",
+      "certificate"
+    ]
+  },
+  {
+    "id": 682,
+    "db_id": "car_1",
+    "question": "How many models from car makers based in country '2' are listed in car_names?",
+    "sql": "SELECT COUNT(*) FROM car_names cn JOIN model_list ml ON cn.Model = ml.Model JOIN car_makers cm ON ml.Maker = cm.Id WHERE cm.Country = '2';",
+    "table_names": [
+      "car_makers",
+      "model_list",
+      "car_names",
+      "cars_data"
+    ]
+  },
+  {
+    "id": 419,
+    "db_id": "tracking_grants_for_research",
+    "question": "What is the total grant amount linked to documents of type 'APP' for grants starting between the years 1980 and 2000?",
+    "sql": "SELECT SUM(g.grant_amount) FROM Documents d JOIN Grants g ON d.grant_id = g.grant_id WHERE d.document_type_code = 'APP' AND YEAR(g.grant_start_date) BETWEEN 1980 AND 2000;",
+    "table_names": [
+      "Documents",
+      "Grants",
+      "Organisation_Types",
+      "Organisations"
+    ]
+  },
+  {
+    "id": 16,
+    "db_id": "flight_1",
+    "question": "List the names of employees whose salary is greater than $200,000 and who hold certificates for aircrafts capable of flying distances greater than 6000 miles?",
+    "sql": "SELECT e.ename FROM employee e JOIN certificate c ON e.eid = c.eid JOIN aircraft a ON c.aid = a.aid WHERE a.distance > 6000 AND e.salary > 200000;",
+    "table_names": [
+      "aircraft",
+      "employee",
+      "certificate"
+    ]
+  },
+  {
+    "id": 612,
+    "db_id": "city_record",
+    "question": "Which cities have hosted matches in a particular year and have a GDP greater than 500, and what were the GDP figures along with the hosting years?",
+    "sql": "SELECT city.City, city.GDP, hosting_city.Year FROM city JOIN hosting_city ON city.City_ID = CAST(hosting_city.Host_City AS INTEGER) WHERE city.GDP > 500",
+    "table_names": [
+      "city",
+      "temperature",
+      "hosting_city"
+    ]
+  },
+  {
+    "id": 301,
+    "db_id": "college_1",
+    "question": "Which department within the BUS school offers the most classes, and how many classes does it offer?",
+    "sql": "SELECT D.DEPT_NAME, COUNT(*) AS NUM_CLASSES FROM CLASS CL JOIN COURSE C ON CL.CRS_CODE = C.CRS_CODE JOIN DEPARTMENT D ON C.DEPT_CODE = D.DEPT_CODE WHERE D.SCHOOL_CODE = 'BUS' GROUP BY D.DEPT_NAME ORDER BY NUM_CLASSES DESC LIMIT 1;",
+    "table_names": [
+      "CLASS",
+      "COURSE",
+      "DEPARTMENT",
+      "EMPLOYEE",
+      "PROFESSOR"
+    ]
+  },
+  {
+    "id": 587,
+    "db_id": "customers_and_addresses",
+    "question": "How many customers who use Credit Card as their payment method have addresses located in Colorado?",
+    "sql": "SELECT COUNT(*) FROM Customer_Addresses ca JOIN Addresses a ON ca.address_id = a.address_id JOIN Customers c ON ca.customer_id = c.customer_id WHERE c.payment_method = 'Credit Card' AND a.state_province_county = 'Colorado';",
+    "table_names": [
+      "Addresses",
+      "Customers",
+      "Customer_Addresses"
+    ]
+  },
+  {
+    "id": 621,
+    "db_id": "e_government",
+    "question": "What are the names of individuals who started contact before the year 2017 and are associated with the organization with the UK VAT number 1211, and what is this organization's name?",
+    "sql": "SELECT i.individual_first_name, i.individual_last_name, o.organization_name FROM Individuals i JOIN Organization_Contact_Individuals oci ON i.individual_id = oci.individual_id JOIN Organizations o ON oci.organization_id = o.organization_id WHERE o.uk_vat_number = '1211' AND oci.date_contact_from < '2017-01-01 00:00:00';",
+    "table_names": [
+      "Individuals",
+      "Organizations",
+      "Organization_Contact_Individuals"
+    ]
+  },
+  {
+    "id": 117,
+    "db_id": "small_bank_1",
+    "question": "Which customer has savings account balance less than $500 and checking account balance less than $100?",
+    "sql": "SELECT A.name FROM ACCOUNTS A JOIN SAVINGS S ON A.custid = S.custid JOIN CHECKING C ON A.custid = C.custid WHERE S.balance < 500 AND C.balance < 100;",
+    "table_names": [
+      "ACCOUNTS",
+      "SAVINGS",
+      "CHECKING"
+    ]
+  },
+  {
+    "id": 431,
+    "db_id": "tracking_grants_for_research",
+    "question": "How many distinct projects have outcomes with patents and are associated with organizations that have projects described by either 'ad' or 'beatae'?",
+    "sql": "SELECT COUNT(DISTINCT po.project_id) FROM Project_Outcomes po JOIN Projects p ON po.project_id = p.project_id WHERE po.outcome_code = 'Patent' AND p.organisation_id IN (SELECT organisation_id FROM Projects WHERE project_details LIKE '%ad%' OR project_details LIKE '%beatae%');",
+    "table_names": [
+      "Project_Outcomes",
+      "Projects",
+      "Research_Outcomes"
+    ]
+  },
+  {
+    "id": 5,
+    "db_id": "student_assessment",
+    "question": "What are the first and last names of candidates with qualifications 'A' or 'B' who passed their assessments, ordered by the assessment date?",
+    "sql": "SELECT p.first_name, p.last_name, ca.qualification, ca.asessment_outcome_code FROM People p JOIN Candidate_Assessments ca ON p.person_id = ca.candidate_id WHERE ca.asessment_outcome_code = 'Pass' AND ca.qualification IN ('A', 'B') ORDER BY ca.assessment_date ASC;",
+    "table_names": [
+      "People",
+      "Candidates",
+      "Candidate_Assessments"
+    ]
+  },
+  {
+    "id": 417,
+    "db_id": "tracking_grants_for_research",
+    "question": "What is the average grant amount awarded after the year 2000 to organisations classified as research?",
+    "sql": "SELECT AVG(g.grant_amount) FROM Grants g JOIN Organisations o ON g.organisation_id = o.organisation_id WHERE o.organisation_type = 'RES' AND g.grant_start_date >= '2000-01-01 00:00:00';",
+    "table_names": [
+      "Grants",
+      "Organisation_Types",
+      "Organisations"
+    ]
+  },
+  {
+    "id": 66,
+    "db_id": "college_2",
+    "question": "List the names of instructors who work in departments advising at least one student advised by instructor with ID 73623.",
+    "sql": "SELECT instructor.name FROM instructor WHERE instructor.dept_name IN (SELECT dept_name FROM student WHERE ID IN (SELECT s_ID FROM advisor WHERE i_ID = '73623'));",
+    "table_names": [
+      "instructor",
+      "student",
+      "advisor"
+    ]
+  },
+  {
+    "id": 325,
+    "db_id": "baseball_1",
+    "question": "Find the average height of the players who belong to the college called 'Yale University'.",
+    "sql": "SELECT avg(T1.height) FROM player AS T1 JOIN player_college AS T2 ON T1.player_id  =  T2.player_id JOIN college AS T3 ON T3.college_id  =  T2.college_id WHERE T3.name_full  =  'Yale University';",
+    "table_names": [
+      "player_college",
+      "player",
+      "college"
+    ]
+  },
+  {
+    "id": 373,
+    "db_id": "cre_Doc_Tracking_DB",
+    "question": "Which documents of type 'PR' were located in a location before the year 2000, and what are the names of the locations?",
+    "sql": "SELECT AD.Document_Name, RL.Location_Name FROM All_Documents AD JOIN Document_Locations DL ON AD.Document_ID = DL.Document_ID JOIN Ref_Locations RL ON DL.Location_Code = RL.Location_Code WHERE AD.Document_Type_Code = 'PR' AND DL.Date_in_Location_From < '2000-01-01';",
+    "table_names": [
+      "Ref_Locations",
+      "All_Documents",
+      "Document_Locations"
+    ]
+  },
+  {
+    "id": 388,
+    "db_id": "club_1",
+    "question": "Can you list the first and last names of students older than 17 who are members of clubs located at 'AKW'?",
+    "sql": "SELECT s.Fname, s.LName FROM Student s JOIN Member_of_club mc ON s.StuID = mc.StuID JOIN Club c ON mc.ClubID = c.ClubID WHERE s.Age > 17 AND c.ClubLocation = 'AKW';",
+    "table_names": [
+      "Student",
+      "Club",
+      "Member_of_club"
+    ]
+  },
+  {
+    "id": 90,
+    "db_id": "tracking_orders",
+    "question": "What are the names of DVD products ordered by customer with id 12?",
+    "sql": "SELECT p.product_name FROM Products p INNER JOIN Order_Items oi ON p.product_id = oi.product_id INNER JOIN Orders o ON oi.order_id = o.order_id WHERE o.customer_id = 12 AND p.production_type_code = 'DVDs';",
+    "table_names": [
+      "Orders",
+      "Products",
+      "Order_Items"
+    ]
+  },
+  {
+    "id": 72,
+    "db_id": "college_2",
+    "question": "What is the average salary of instructors advising Physics students who have earned more than 100 credits?",
+    "sql": "SELECT AVG(i.salary) FROM instructor i JOIN advisor a ON i.ID = a.i_ID JOIN student s ON a.s_ID = s.ID WHERE s.dept_name = 'Physics' AND s.tot_cred > 100;",
+    "table_names": [
+      "instructor",
+      "student",
+      "advisor"
+    ]
+  },
+  {
+    "id": 47,
+    "db_id": "medicine_enzyme_interaction",
+    "question": "Which FDA-approved medicines activate enzymes that are located in the mitochondrion?",
+    "sql": "SELECT DISTINCT m.name FROM medicine m JOIN medicine_enzyme_interaction mei ON m.id = mei.medicine_id JOIN enzyme e ON e.id = mei.enzyme_id WHERE mei.interaction_type = 'activitor' AND e.Location = 'Mitochondrion' AND m.FDA_approved = 'Yes';",
+    "table_names": [
+      "medicine",
+      "enzyme",
+      "medicine_enzyme_interaction"
+    ]
+  },
+  {
+    "id": 161,
+    "db_id": "formula_1",
+    "question": "What are the ids and last names of all drivers who participated in the most races?",
+    "sql": "SELECT T1.driverid ,  T1.surname FROM drivers AS T1 JOIN results AS T2 ON T1.driverid = T2.driverid JOIN races AS T3 ON T2.raceid = T3.raceid GROUP BY T1.driverid ORDER BY count(*) DESC LIMIT 1",
+    "table_names": [
+      "races",
+      "drivers",
+      "results"
+    ]
+  },
+  {
+    "id": 136,
+    "db_id": "gas_company",
+    "question": "Which USA-headquartered company has the most gas stations according to the provided data, and how many stations does it have?",
+    "sql": "SELECT c.Company, COUNT(g.Station_ID) AS station_count FROM company c JOIN station_company sc ON c.Company_ID = sc.Company_ID JOIN gas_station g ON sc.Station_ID = g.Station_ID WHERE c.Headquarters = 'USA' GROUP BY c.Company ORDER BY station_count DESC LIMIT 1;",
+    "table_names": [
+      "company",
+      "gas_station",
+      "station_company"
+    ]
+  },
+  {
+    "id": 176,
+    "db_id": "movie_1",
+    "question": "What is the average rating given by Chris Jackson to movies directed by Steven Spielberg?",
+    "sql": "SELECT AVG(Rating.stars) FROM Rating INNER JOIN Reviewer ON Rating.rID = Reviewer.rID INNER JOIN Movie ON Rating.mID = Movie.mID WHERE Movie.director = 'Steven Spielberg' AND Reviewer.name = 'Chris Jackson';",
+    "table_names": [
+      "Movie",
+      "Reviewer",
+      "Rating"
+    ]
+  },
+  {
+    "id": 695,
+    "db_id": "course_teach",
+    "question": "Who is the teacher assigned to teach the Music course to grade 4?",
+    "sql": "SELECT teacher.Name FROM teacher JOIN course_arrange ON teacher.Teacher_ID = course_arrange.Teacher_ID JOIN course ON course.Course_ID = course_arrange.Course_ID WHERE course.Course = 'Music' AND course_arrange.Grade = 4;",
+    "table_names": [
+      "course",
+      "teacher",
+      "course_arrange"
+    ]
+  },
+  {
+    "id": 454,
+    "db_id": "college_3",
+    "question": "What is the average GPA (Grade Point Average) of students who live in the city with code 'BAL'?",
+    "sql": "SELECT AVG(gc.gradepoint) FROM Enrolled_in e JOIN Gradeconversion gc ON e.Grade = gc.lettergrade WHERE e.StuID IN (SELECT StuID FROM Student WHERE city_code = 'BAL');",
+    "table_names": [
+      "Student",
+      "Enrolled_in",
+      "Gradeconversion"
+    ]
+  },
+  {
+    "id": 525,
+    "db_id": "products_gen_characteristics",
+    "question": "What is the total selling price of all products that are categorized as 'Herbs' and have the color 'red'?",
+    "sql": "SELECT SUM(CAST(P.typical_selling_price AS FLOAT)) FROM Products P JOIN Ref_Product_Categories RPC ON P.product_category_code = RPC.product_category_code JOIN Ref_Colors RC ON P.color_code = RC.color_code WHERE RC.color_description = 'red' AND RPC.product_category_description = 'Herbs';",
+    "table_names": [
+      "Ref_Colors",
+      "Ref_Product_Categories",
+      "Products"
+    ]
+  },
+  {
+    "id": 248,
+    "db_id": "icfp_1",
+    "question": "Who are the authors of the paper titled 'An Equivalence-Preserving CPS Translation via Multi-Language Semantics'?",
+    "sql": "SELECT fname, lname FROM Authors WHERE authID IN (SELECT authID FROM Authorship WHERE paperID = (SELECT paperID FROM Papers WHERE title = 'An Equivalence-Preserving CPS Translation via Multi-Language Semantics'));",
+    "table_names": [
+      "Authors",
+      "Papers",
+      "Authorship"
+    ]
+  },
+  {
+    "id": 98,
+    "db_id": "small_bank_1",
+    "question": "Which customers have savings account balances over 100000 and checking account balances of at least 5000?",
+    "sql": "SELECT A.name FROM ACCOUNTS AS A JOIN SAVINGS AS S ON A.custid = S.custid JOIN CHECKING AS C ON A.custid = C.custid WHERE S.balance > 100000 AND C.balance >= 5000;",
+    "table_names": [
+      "ACCOUNTS",
+      "SAVINGS",
+      "CHECKING"
+    ]
+  },
+  {
+    "id": 239,
+    "db_id": "icfp_1",
+    "question": "What institution does the author of the paper titled 'Functional Pearl: Modular Rollback through Control Logging' belong to?",
+    "sql": "SELECT inst.name FROM Inst inst WHERE inst.instID IN (SELECT instID FROM Authors NATURAL JOIN Papers WHERE title = 'Functional Pearl: Modular Rollback through Control Logging')",
+    "table_names": [
+      "Inst",
+      "Authors",
+      "Papers",
+      "Authorship"
+    ]
+  },
+  {
+    "id": 24,
+    "db_id": "allergy_1",
+    "question": "What are the names of students younger than 20 years old from city code 'BAL' who have environmental allergies?",
+    "sql": "SELECT DISTINCT s.Fname, s.LName FROM Student s INNER JOIN Has_Allergy ha ON s.StuID = ha.StuID INNER JOIN Allergy_Type at ON ha.Allergy = at.Allergy WHERE s.Age < 20 AND at.AllergyType = 'environmental' AND s.city_code = 'BAL';",
+    "table_names": [
+      "Allergy_Type",
+      "Has_Allergy",
+      "Student"
+    ]
+  },
+  {
+    "id": 169,
+    "db_id": "csu_1",
+    "question": "In 2004, among all campuses located in Los Angeles County, which university awarded the highest number of degrees, and what was the number of faculty members at that university?",
+    "sql": "SELECT c.Campus, f.Faculty, d.Degrees FROM Campuses c JOIN faculty f ON c.Id = f.Campus JOIN degrees d ON c.Id = d.Campus AND f.Year = d.Year WHERE c.County = 'Los Angeles' AND d.Year = 2004 ORDER BY d.Degrees DESC LIMIT 1;",
+    "table_names": [
+      "Campuses",
+      "degrees",
+      "faculty"
+    ]
+  },
+  {
+    "id": 206,
+    "db_id": "customers_and_addresses",
+    "question": "Find the customer's name and email address who has lived in an apartment located in Michigan.",
+    "sql": "SELECT Customers.customer_name, Customers.customer_email FROM Customers JOIN Customer_Addresses ON Customers.customer_id = Customer_Addresses.customer_id JOIN Addresses ON Customer_Addresses.address_id = Addresses.address_id WHERE Addresses.state_province_county = 'Michigan' AND Customer_Addresses.address_type = 'Apartment';",
+    "table_names": [
+      "Addresses",
+      "Customers",
+      "Customer_Addresses"
+    ]
+  },
+  {
+    "id": 309,
+    "db_id": "college_1",
+    "question": "Which professors from the 'Computer Info. Systems' department hold a Ph.D., and what are their first and last names?",
+    "sql": "SELECT EMPLOYEE.EMP_FNAME, EMPLOYEE.EMP_LNAME, PROFESSOR.PROF_HIGH_DEGREE FROM EMPLOYEE JOIN PROFESSOR ON EMPLOYEE.EMP_NUM = PROFESSOR.EMP_NUM JOIN DEPARTMENT ON PROFESSOR.DEPT_CODE = DEPARTMENT.DEPT_CODE WHERE DEPARTMENT.DEPT_NAME = 'Computer Info. Systems' AND PROFESSOR.PROF_HIGH_DEGREE = 'Ph.D.';",
+    "table_names": [
+      "DEPARTMENT",
+      "EMPLOYEE",
+      "PROFESSOR"
+    ]
+  },
+  {
+    "id": 486,
+    "db_id": "soccer_2",
+    "question": "Which states have colleges that rejected players who received a yellow card?",
+    "sql": "SELECT College.state FROM College JOIN Tryout ON College.cName = Tryout.cName JOIN Player ON Player.pID = Tryout.pID WHERE Player.yCard = 'yes' AND Tryout.decision = 'no';",
+    "table_names": [
+      "College",
+      "Player",
+      "Tryout"
+    ]
+  },
+  {
+    "id": 650,
+    "db_id": "tracking_orders",
+    "question": "Which customers have placed orders with multiple distinct statuses, and what are their corresponding order statuses and placement dates?",
+    "sql": "SELECT customer_name, order_status, date_order_placed FROM Customers INNER JOIN Orders ON Customers.customer_id = Orders.customer_id WHERE Customers.customer_id IN (SELECT customer_id FROM Orders GROUP BY customer_id HAVING COUNT(DISTINCT order_status) > 1);",
+    "table_names": [
+      "Customers",
+      "Orders",
+      "Products",
+      "Order_Items"
+    ]
+  },
+  {
+    "id": 259,
+    "db_id": "assets_maintenance",
+    "question": "List the details of assets that contain part ID 3, experienced a 'system error' fault, and were disposed of after March 1, 2018.",
+    "sql": "SELECT a.asset_details FROM Assets a JOIN Asset_Parts ap ON a.asset_id = ap.asset_id JOIN Fault_Log fl ON a.asset_id = fl.asset_id WHERE ap.part_id = 3 AND fl.fault_description = 'system error' AND a.asset_disposed_date > '2018-03-01 00:00:00';",
+    "table_names": [
+      "Assets",
+      "Asset_Parts",
+      "Fault_Log"
+    ]
+  },
+  {
+    "id": 34,
+    "db_id": "journal_committee",
+    "question": "Who was responsible for the photo work type in the journal themed 'at Minnesota Vikings'?",
+    "sql": "SELECT e.Name FROM editor e JOIN journal_committee jc ON e.Editor_ID = jc.Editor_ID JOIN journal j ON jc.Journal_ID = j.Journal_ID WHERE j.Theme = 'at Minnesota Vikings' AND jc.Work_Type = 'Photo';",
+    "table_names": [
+      "journal",
+      "editor",
+      "journal_committee"
+    ]
+  },
+  {
+    "id": 380,
+    "db_id": "club_1",
+    "question": "Which students from Baltimore (city code 'BAL') are members of the club 'Bootup Baltimore'?",
+    "sql": "SELECT s.Fname, s.LName FROM Student s JOIN Member_of_club m ON s.StuID = m.StuID JOIN Club c ON m.ClubID = c.ClubID WHERE c.ClubName = 'Bootup Baltimore' AND s.city_code = 'BAL';",
+    "table_names": [
+      "Student",
+      "Club",
+      "Member_of_club"
+    ]
+  },
+  {
+    "id": 568,
+    "db_id": "customer_complaints",
+    "question": "What are the customer IDs and cities of customers who currently have open complaints regarding the product named 'The Great Gatsby'?",
+    "sql": "SELECT c.customer_id, c.town_city FROM Customers c JOIN Complaints comp ON c.customer_id = comp.customer_id JOIN Products p ON comp.product_id = p.product_id WHERE comp.complaint_status_code = 'Open' AND p.product_name = 'The Great Gatsby';",
+    "table_names": [
+      "Customers",
+      "Products",
+      "Complaints"
+    ]
+  },
+  {
+    "id": 411,
+    "db_id": "club_1",
+    "question": "How many students live in the city where the club that Linda Smith is president of is located?",
+    "sql": "SELECT COUNT(*) FROM Student WHERE city_code = (SELECT ClubLocation FROM Club WHERE ClubID = (SELECT ClubID FROM Member_of_club WHERE StuID = 1001));",
+    "table_names": [
+      "Student",
+      "Club",
+      "Member_of_club"
+    ]
+  },
+  {
+    "id": 473,
+    "db_id": "aircraft",
+    "question": "Which airport operates the aircraft model with the highest maximum gross weight?",
+    "sql": "SELECT airport.Airport_Name FROM airport JOIN airport_aircraft ON airport.Airport_ID = airport_aircraft.Airport_ID JOIN aircraft ON airport_aircraft.Aircraft_ID = aircraft.Aircraft_ID WHERE aircraft.Max_Gross_Weight = (SELECT MAX(Max_Gross_Weight) FROM aircraft);",
+    "table_names": [
+      "aircraft",
+      "airport",
+      "airport_aircraft"
+    ]
+  },
+  {
+    "id": 713,
+    "db_id": "dog_kennels",
+    "question": "Who is the veterinarian located in the same state as the owner of the dog named 'Mavis'?",
+    "sql": "SELECT Owners.first_name, Owners.last_name, Professionals.first_name, Professionals.last_name FROM Owners JOIN Dogs ON Owners.owner_id = Dogs.owner_id JOIN Professionals ON Professionals.state = Owners.state WHERE Dogs.name = 'Mavis' AND Professionals.role_code = 'Veterenarian';",
+    "table_names": [
+      "Owners",
+      "Dogs",
+      "Professionals"
+    ]
+  },
+  {
+    "id": 213,
+    "db_id": "icfp_1",
+    "question": "Who is the primary author of the paper titled 'Functional Pearl: Modular Rollback through Control Logging'?",
+    "sql": "SELECT a.fname, a.lname FROM Authors a JOIN Authorship au ON a.authID = au.authID JOIN Papers p ON au.paperID = p.paperID WHERE p.title = 'Functional Pearl: Modular Rollback through Control Logging' AND au.authOrder = 1;",
+    "table_names": [
+      "Authors",
+      "Papers",
+      "Authorship"
+    ]
+  },
+  {
+    "id": 655,
+    "db_id": "architecture",
+    "question": "What is the name of the longest bridge designed by Le Corbusier?",
+    "sql": "SELECT bridge.name FROM bridge JOIN architect ON bridge.architect_id = architect.id WHERE architect.name = 'Le Corbusier' AND bridge.length_meters = (SELECT MAX(length_meters) FROM bridge WHERE architect_id = (SELECT id FROM architect WHERE name = 'Le Corbusier'))",
+    "table_names": [
+      "architect",
+      "bridge",
+      "mill"
+    ]
+  },
+  {
+    "id": 610,
+    "db_id": "city_record",
+    "question": "Which cities with a GDP greater than 500 hosted matches held in venues located in San Salvador?",
+    "sql": "SELECT city.City FROM city INNER JOIN hosting_city ON city.City_ID = hosting_city.Host_City INNER JOIN match ON hosting_city.Match_ID = match.Match_ID WHERE match.Venue LIKE '%San Salvador%' AND city.GDP > 500;",
+    "table_names": [
+      "city",
+      "match",
+      "hosting_city"
+    ]
+  },
+  {
+    "id": 211,
+    "db_id": "icfp_1",
+    "question": "Who is the first-listed author of the paper titled 'Functional Pearl: Modular Rollback through Control Logging'?",
+    "sql": "SELECT A.lname, A.fname FROM Authors A JOIN Authorship Au ON A.authID = Au.authID JOIN Papers P ON Au.paperID = P.paperID WHERE P.title = 'Functional Pearl: Modular Rollback through Control Logging' AND Au.authOrder = 1;",
+    "table_names": [
+      "Authors",
+      "Papers",
+      "Authorship"
+    ]
+  },
+  {
+    "id": 2,
+    "db_id": "student_assessment",
+    "question": "List the names of students who have registered for both Statistics and English courses.",
+    "sql": "SELECT student_details FROM Students WHERE student_id IN (SELECT student_id FROM Student_Course_Registrations WHERE course_id IN (SELECT course_id FROM Courses WHERE course_name = 'statistics')) AND student_id IN (SELECT student_id FROM Student_Course_Registrations WHERE course_id IN (SELECT course_id FROM Courses WHERE course_name = 'English'));",
+    "table_names": [
+      "Students",
+      "Courses",
+      "Student_Course_Registrations"
+    ]
+  },
+  {
+    "id": 86,
+    "db_id": "insurance_and_eClaims",
+    "question": "What is the total amount paid for claims related to 'Child Birth' made by the customer named 'Buddy Marquardt'?",
+    "sql": "SELECT SUM(ch.Amount_Piad) FROM Claim_Headers ch INNER JOIN Policies p ON ch.Policy_ID = p.Policy_ID INNER JOIN Customers c ON p.Customer_ID = c.Customer_ID WHERE c.Customer_Details = 'Buddy Marquardt' AND ch.Claim_Type_Code = 'Child Birth';",
+    "table_names": [
+      "Customers",
+      "Policies",
+      "Claim_Headers"
+    ]
+  },
+  {
+    "id": 717,
+    "db_id": "dog_kennels",
+    "question": "What is the total cost of vaccination treatments received by dogs whose owners live in North Dakota?",
+    "sql": "SELECT SUM(t.cost_of_treatment) FROM Treatments t JOIN Dogs d ON t.dog_id = d.dog_id JOIN Owners o ON d.owner_id = o.owner_id WHERE o.state = 'NorthDakota' AND t.treatment_type_code = 'VAC';",
+    "table_names": [
+      "Owners",
+      "Dogs",
+      "Treatments"
+    ]
+  },
+  {
+    "id": 485,
+    "db_id": "store_product",
+    "question": "Can you provide the name of the store with the highest ranking, along with the district it belongs to, the city where this district is headquartered, and the city's population?",
+    "sql": "SELECT s.Store_Name, d.District_name, d.Headquartered_City, d.City_Population FROM store s JOIN store_district sd ON s.Store_ID = sd.Store_ID JOIN district d ON sd.District_ID = d.District_ID WHERE s.Ranking = (SELECT MIN(Ranking) FROM store)",
+    "table_names": [
+      "store",
+      "district",
+      "store_district"
+    ]
+  },
+  {
+    "id": 414,
+    "db_id": "club_1",
+    "question": "How many students from city code 'BAL' are members of clubs located at 'AKW'?",
+    "sql": "SELECT COUNT(*) FROM Student AS s JOIN Member_of_club AS mc ON s.StuID = mc.StuID JOIN Club AS c ON mc.ClubID = c.ClubID WHERE c.ClubLocation = 'AKW' AND s.city_code='BAL';",
+    "table_names": [
+      "Student",
+      "Club",
+      "Member_of_club"
+    ]
+  },
+  {
+    "id": 496,
+    "db_id": "tracking_software_problems",
+    "question": "How many problems have been reported related to products with product details 'q'?",
+    "sql": "SELECT COUNT(*) FROM Problems p JOIN Product prod ON p.product_id = prod.product_id WHERE prod.product_details = 'q';",
+    "table_names": [
+      "Product",
+      "Staff",
+      "Problems"
+    ]
+  },
+  {
+    "id": 606,
+    "db_id": "customers_and_addresses",
+    "question": "What are the names of customers who paid by credit card and have at least one cancelled order?",
+    "sql": "SELECT customer_name FROM Customers WHERE customer_id IN (SELECT customer_id FROM Customer_Orders WHERE order_status = 'Cancelled') AND payment_method = 'Credit Card';",
+    "table_names": [
+      "Products",
+      "Customers",
+      "Customer_Orders",
+      "Order_Items"
+    ]
+  },
+  {
+    "id": 451,
+    "db_id": "college_3",
+    "question": "What is the average grade point of all students advised by advisor with ID 1121?",
+    "sql": "SELECT AVG(gradepoint) FROM Enrolled_in e JOIN Gradeconversion g ON e.Grade = g.lettergrade WHERE StuID IN (SELECT StuID FROM Student WHERE Advisor = 1121);",
+    "table_names": [
+      "Student",
+      "Enrolled_in",
+      "Gradeconversion"
+    ]
+  },
+  {
+    "id": 235,
+    "db_id": "icfp_1",
+    "question": "What is the title of the paper where author Ralf Hinze is listed as the first author?",
+    "sql": "SELECT Papers.title FROM Papers INNER JOIN Authorship ON Papers.paperID = Authorship.paperID INNER JOIN Authors ON Authorship.authID = Authors.authID WHERE Authors.fname = 'Ralf' AND Authors.lname = 'Hinze' AND Authorship.authOrder = 1;",
+    "table_names": [
+      "Authors",
+      "Papers",
+      "Authorship"
+    ]
+  },
+  {
+    "id": 113,
+    "db_id": "small_bank_1",
+    "question": "Which customers have a savings account balance greater than 190,000 and a checking account balance greater than 2,500?",
+    "sql": "SELECT name FROM ACCOUNTS WHERE custid IN (SELECT custid FROM SAVINGS WHERE balance > 190000) AND custid IN (SELECT custid FROM CHECKING WHERE balance > 2500);",
+    "table_names": [
+      "ACCOUNTS",
+      "SAVINGS",
+      "CHECKING"
+    ]
+  },
+  {
+    "id": 435,
+    "db_id": "document_management",
+    "question": "What are the distinct names of documents whose sections contain an image with ID 12 and belong to documents of type 'CV'?",
+    "sql": "SELECT DISTINCT D.document_name FROM Documents AS D JOIN Document_Sections AS DS ON D.document_code = DS.document_code JOIN Document_Sections_Images AS DSI ON DS.section_id = DSI.section_id WHERE DSI.image_id = 12 AND D.document_type_code = 'CV';",
+    "table_names": [
+      "Documents",
+      "Document_Sections",
+      "Document_Sections_Images"
+    ]
+  },
+  {
+    "id": 596,
+    "db_id": "customers_and_addresses",
+    "question": "Which customers paid with Credit Card and placed an order containing product_id 1?",
+    "sql": "SELECT customer_name FROM Customers WHERE customer_id IN (SELECT customer_id FROM Customer_Orders WHERE order_id IN (SELECT order_id FROM Order_Items WHERE product_id = 1)) AND payment_method = 'Credit Card';",
+    "table_names": [
+      "Customers",
+      "Customer_Orders",
+      "Order_Items"
+    ]
+  },
+  {
+    "id": 8,
+    "db_id": "flight_1",
+    "question": "Which employee is certified to operate the aircraft with the greatest flying distance, and what is the maximum distance this aircraft can fly?",
+    "sql": "SELECT e.ename, MAX(a.distance) FROM employee e JOIN certificate c ON e.eid = c.eid JOIN aircraft a ON c.aid = a.aid GROUP BY e.eid, e.ename ORDER BY MAX(a.distance) DESC LIMIT 1;",
+    "table_names": [
+      "aircraft",
+      "employee",
+      "certificate"
+    ]
+  },
+  {
+    "id": 291,
+    "db_id": "college_1",
+    "question": "What classroom is the section 1 of the 4-credit course offered by the Computer Info. Systems department held in?",
+    "sql": "SELECT CLASS.CLASS_ROOM FROM CLASS JOIN COURSE ON CLASS.CRS_CODE = COURSE.CRS_CODE JOIN DEPARTMENT ON COURSE.DEPT_CODE = DEPARTMENT.DEPT_CODE WHERE DEPARTMENT.DEPT_NAME = 'Computer Info. Systems' AND COURSE.CRS_CREDIT = 4.0 AND CLASS.CLASS_SECTION = '1';",
+    "table_names": [
+      "CLASS",
+      "COURSE",
+      "DEPARTMENT",
+      "ENROLL",
+      "STUDENT"
+    ]
+  },
+  {
+    "id": 628,
+    "db_id": "scientist_1",
+    "question": "Who are the scientists assigned to the project that has the maximum number of hours?",
+    "sql": "SELECT s.Name FROM Scientists AS s JOIN AssignedTo AS a ON s.SSN = a.Scientist JOIN Projects AS p ON a.Project = p.Code WHERE p.Hours = (SELECT MAX(Hours) FROM Projects);",
+    "table_names": [
+      "Scientists",
+      "Projects",
+      "AssignedTo"
+    ]
+  },
+  {
+    "id": 604,
+    "db_id": "customers_and_addresses",
+    "question": "List the names of customers who placed orders with a quantity of 6 or more for product ID 3.",
+    "sql": "SELECT customer_name FROM Customers WHERE customer_id IN (SELECT customer_id FROM Customer_Orders WHERE order_id IN (SELECT order_id FROM Order_Items WHERE product_id = 3 AND order_quantity >= 6));",
+    "table_names": [
+      "Customers",
+      "Customer_Orders",
+      "Order_Items"
+    ]
+  },
+  {
+    "id": 567,
+    "db_id": "dorm_1",
+    "question": "How many students are from the same city as Linda Smith but have a different advisor?",
+    "sql": "SELECT COUNT(*) FROM Student WHERE city_code = (SELECT city_code FROM Student WHERE LName = 'Smith' AND Fname = 'Linda') AND Advisor != (SELECT Advisor FROM Student WHERE LName = 'Smith' AND Fname = 'Linda');",
+    "table_names": [
+      "Student",
+      "Dorm",
+      "Dorm_amenity",
+      "Has_amenity",
+      "Lives_in"
+    ]
+  },
+  {
+    "id": 175,
+    "db_id": "movie_1",
+    "question": "What is the average rating given by Chris Jackson to movies directed by Steven Spielberg?",
+    "sql": "SELECT AVG(Rating.stars) FROM Rating JOIN Reviewer ON Rating.rID = Reviewer.rID JOIN Movie ON Rating.mID = Movie.mID WHERE Reviewer.name = 'Chris Jackson' AND Movie.director = 'Steven Spielberg';",
+    "table_names": [
+      "Movie",
+      "Reviewer",
+      "Rating"
+    ]
+  },
+  {
+    "id": 535,
+    "db_id": "dorm_1",
+    "question": "Which dormitory offers Air Conditioning, a Pub in Basement, and allows pets?",
+    "sql": "SELECT dorm_name FROM Dorm WHERE dormid IN (SELECT dormid FROM Has_amenity WHERE amenid IN (SELECT amenid FROM Dorm_amenity WHERE amenity_name = 'Allows Pets')) AND dormid IN (SELECT dormid FROM Has_amenity WHERE amenid IN (SELECT amenid FROM Dorm_amenity WHERE amenity_name = 'Air Conditioning')) AND dormid IN (SELECT dormid FROM Has_amenity WHERE amenid IN (SELECT amenid FROM Dorm_amenity WHERE amenity_name = 'Pub in Basement'));",
+    "table_names": [
+      "Dorm",
+      "Dorm_amenity",
+      "Has_amenity"
+    ]
+  },
+  {
+    "id": 391,
+    "db_id": "club_1",
+    "question": "What are the names of clubs that have members coming from the city code 'BAL'?",
+    "sql": "SELECT ClubName FROM Club WHERE ClubID IN (SELECT ClubID FROM Member_of_club WHERE StuID IN (SELECT StuID FROM Student WHERE city_code = 'BAL'))",
+    "table_names": [
+      "Student",
+      "Club",
+      "Member_of_club"
+    ]
+  },
+  {
+    "id": 432,
+    "db_id": "document_management",
+    "question": "Which books linked to the functional area 'Acknowledgement' have an access count greater than 2000?",
+    "sql": "SELECT DISTINCT D.document_name FROM Documents D JOIN Document_Functional_Areas DFA ON D.document_code = DFA.document_code JOIN Functional_Areas FA ON DFA.functional_area_code = FA.functional_area_code WHERE FA.functional_area_description = 'Acknowledgement' AND D.access_count > 2000 AND D.document_type_code = 'Book';",
+    "table_names": [
+      "Functional_Areas",
+      "Documents",
+      "Document_Functional_Areas"
+    ]
+  },
+  {
+    "id": 10,
+    "db_id": "flight_1",
+    "question": "What are the names of the aircraft that the employee with the highest salary is certified to operate?",
+    "sql": "SELECT aname FROM aircraft WHERE aid IN (SELECT aid FROM certificate WHERE eid IN (SELECT eid FROM employee WHERE salary = (SELECT MAX(salary) FROM employee)));",
+    "table_names": [
+      "aircraft",
+      "employee",
+      "certificate"
+    ]
+  },
+  {
+    "id": 556,
+    "db_id": "dorm_1",
+    "question": "What is the name and age of the youngest female student from city_code 'BAL', and name any dorm that exclusively houses female students?",
+    "sql": "SELECT Fname, LName, Age, dorm_name FROM Student, Dorm WHERE Student.Sex = 'F' AND Student.city_code = 'BAL' AND Student.Age = (SELECT MIN(Age) FROM Student WHERE Sex = 'F' AND city_code = 'BAL') AND Dorm.gender = 'F';",
+    "table_names": [
+      "Student",
+      "Dorm",
+      "Dorm_amenity",
+      "Has_amenity",
+      "Lives_in"
+    ]
+  },
+  {
+    "id": 48,
+    "db_id": "medicine_enzyme_interaction",
+    "question": "Which FDA-approved medicines act as activators for enzymes located in the Cytosol?",
+    "sql": "SELECT m.name FROM medicine m JOIN medicine_enzyme_interaction mei ON m.id = mei.medicine_id JOIN enzyme e ON mei.enzyme_id = e.id WHERE mei.interaction_type = 'activitor' AND e.Location = 'Cytosol' AND m.FDA_approved = 'Yes';",
+    "table_names": [
+      "medicine",
+      "enzyme",
+      "medicine_enzyme_interaction"
+    ]
+  },
+  {
+    "id": 50,
+    "db_id": "medicine_enzyme_interaction",
+    "question": "What are the enzyme names that are activated by FDA-approved medicines?",
+    "sql": "SELECT DISTINCT e.name FROM enzyme e JOIN medicine_enzyme_interaction mei ON e.id = mei.enzyme_id JOIN medicine m ON mei.medicine_id = m.id WHERE m.FDA_approved = 'Yes' AND mei.interaction_type = 'activitor';",
+    "table_names": [
+      "medicine",
+      "enzyme",
+      "medicine_enzyme_interaction"
+    ]
+  },
+  {
+    "id": 164,
+    "db_id": "machine_repair",
+    "question": "Who is the technician assigned to the machine that has the highest quality rank?",
+    "sql": "SELECT technician.Name FROM technician INNER JOIN repair_assignment ON technician.technician_id = repair_assignment.technician_id INNER JOIN machine ON machine.Machine_ID = repair_assignment.Machine_ID WHERE machine.quality_rank = (SELECT MAX(quality_rank) FROM machine);",
+    "table_names": [
+      "machine",
+      "technician",
+      "repair_assignment"
+    ]
+  },
+  {
+    "id": 597,
+    "db_id": "customers_and_addresses",
+    "question": "What are the names and payment methods of customers who have placed more than one order with at least one order being cancelled?",
+    "sql": "SELECT DISTINCT c.customer_name, c.payment_method FROM Customers c JOIN Customer_Orders co ON c.customer_id = co.customer_id WHERE c.customer_id IN (SELECT customer_id FROM Customer_Orders GROUP BY customer_id HAVING COUNT(order_id) > 1) AND c.customer_id IN (SELECT customer_id FROM Customer_Orders WHERE order_status = 'Cancelled');",
+    "table_names": [
+      "Customers",
+      "Customer_Orders",
+      "Order_Items"
+    ]
+  },
+  {
+    "id": 44,
+    "db_id": "insurance_fnol",
+    "question": "What is the name of the service requested by the customer named 'Jay Chou' for policy ID 366?",
+    "sql": "SELECT Services.Service_name FROM Services JOIN First_Notification_of_Loss ON Services.Service_ID = First_Notification_of_Loss.Service_ID JOIN Customers ON Customers.Customer_ID = First_Notification_of_Loss.Customer_ID WHERE Customers.Customer_name = 'Jay Chou' AND First_Notification_of_Loss.Policy_ID = 366;",
+    "table_names": [
+      "Customers",
+      "Services",
+      "First_Notification_of_Loss"
+    ]
+  },
+  {
+    "id": 283,
+    "db_id": "college_1",
+    "question": "What is the first name, last name, department name, and academic degree of the professor who has a DBA degree?",
+    "sql": "SELECT E.EMP_FNAME, E.EMP_LNAME, D.DEPT_NAME, P.PROF_HIGH_DEGREE FROM EMPLOYEE E JOIN PROFESSOR P ON E.EMP_NUM = P.EMP_NUM JOIN DEPARTMENT D ON P.DEPT_CODE = D.DEPT_CODE WHERE PROF_HIGH_DEGREE = 'DBA'",
+    "table_names": [
+      "DEPARTMENT",
+      "EMPLOYEE",
+      "PROFESSOR"
+    ]
+  },
+  {
+    "id": 148,
+    "db_id": "formula_1",
+    "question": "Give me a list of names and years of races that had any driver whose forename is Lewis?",
+    "sql": "SELECT T2.name ,  T2.year FROM results AS T1 JOIN races AS T2 ON T1.raceid = T2.raceid JOIN drivers AS T3 ON T1.driverid = T3.driverid WHERE T3.forename = \"Lewis\"",
+    "table_names": [
+      "races",
+      "drivers",
+      "results"
+    ]
+  },
+  {
+    "id": 155,
+    "db_id": "formula_1",
+    "question": "What is the id and last name of the driver who participated in the most races after 2010?",
+    "sql": "SELECT T1.driverid ,  T1.surname FROM drivers AS T1 JOIN results AS T2 ON T1.driverid  =  T2.driverid JOIN races AS T3 ON T2.raceid = T3.raceid WHERE T3.year > 2010 GROUP BY T1.driverid ORDER BY count(*) DESC LIMIT 1",
+    "table_names": [
+      "races",
+      "drivers",
+      "results"
+    ]
+  },
+  {
+    "id": 127,
+    "db_id": "browser_web",
+    "question": "Which browsers have been compatible since before 2005 with web client accelerators that support the Mac operating system?",
+    "sql": "SELECT b.name FROM browser b JOIN accelerator_compatible_browser acb ON b.id = acb.browser_id WHERE acb.accelerator_id IN (SELECT id FROM Web_client_accelerator WHERE Operating_system LIKE '%Mac%') AND acb.compatible_since_year < 2005;",
+    "table_names": [
+      "Web_client_accelerator",
+      "browser",
+      "accelerator_compatible_browser"
+    ]
+  },
+  {
+    "id": 484,
+    "db_id": "store_product",
+    "question": "What is the name of the store with the lowest ranking, and in which district is it located?",
+    "sql": "SELECT s.Store_Name, d.District_name FROM store AS s JOIN store_district AS sd ON s.Store_ID = sd.Store_ID JOIN district AS d ON sd.District_ID = d.District_ID WHERE s.Ranking = (SELECT MAX(Ranking) FROM store);",
+    "table_names": [
+      "store",
+      "district",
+      "store_district"
+    ]
+  },
+  {
+    "id": 430,
+    "db_id": "tracking_grants_for_research",
+    "question": "What kinds of research outcomes have been generated by projects conducted by the organisation with ID 1?",
+    "sql": "SELECT DISTINCT o.outcome_code FROM Project_Outcomes o JOIN Projects p ON o.project_id = p.project_id WHERE p.organisation_id = 1",
+    "table_names": [
+      "Project_Outcomes",
+      "Projects",
+      "Research_Outcomes"
+    ]
+  },
+  {
+    "id": 482,
+    "db_id": "store_product",
+    "question": "What is the average pages per minute in color of the products available in the stores classified as 'City Mall'?",
+    "sql": "SELECT AVG(p.pages_per_minute_color) FROM product p JOIN store_product sp ON p.product_id = sp.Product_ID JOIN store s ON sp.Store_ID = s.Store_ID WHERE s.Type = 'City Mall';",
+    "table_names": [
+      "product",
+      "store",
+      "store_product"
+    ]
+  },
+  {
+    "id": 701,
+    "db_id": "museum_visit",
+    "question": "Which museums opened before 2010 have been visited by visitors older than 30 years?",
+    "sql": "SELECT m.Name FROM museum m JOIN visit v ON m.Museum_ID = v.Museum_ID JOIN visitor vr ON vr.ID = v.visitor_ID WHERE vr.Age > 30 AND m.Open_Year < '2010';",
+    "table_names": [
+      "museum",
+      "visitor",
+      "visit"
+    ]
+  },
+  {
+    "id": 715,
+    "db_id": "dog_kennels",
+    "question": "Which owner from North Dakota spent the highest amount on treatments for their dogs and what is their full name?",
+    "sql": "SELECT O.first_name, O.last_name, SUM(T.cost_of_treatment) AS total_cost FROM Owners AS O JOIN Dogs AS D ON O.owner_id = D.owner_id JOIN Treatments AS T ON D.dog_id = T.dog_id WHERE O.state = 'NorthDakota' GROUP BY O.owner_id ORDER BY total_cost DESC LIMIT 1;",
+    "table_names": [
+      "Owners",
+      "Dogs",
+      "Treatments"
+    ]
+  },
+  {
+    "id": 609,
+    "db_id": "customers_and_addresses",
+    "question": "How many unique customers who became customers before March 2018 have placed orders that were cancelled at least once?",
+    "sql": "SELECT COUNT(DISTINCT c.customer_id) FROM Customers c JOIN Customer_Orders co ON c.customer_id = co.customer_id WHERE c.date_became_customer < '2018-03-01' AND co.order_status = 'Cancelled';",
+    "table_names": [
+      "Products",
+      "Customers",
+      "Customer_Orders",
+      "Order_Items"
+    ]
+  },
+  {
+    "id": 292,
+    "db_id": "college_1",
+    "question": "What is the class time of the courses offered by the Computer Info. Systems department that have a credit of 4.0?",
+    "sql": "SELECT CLASS.CLASS_TIME FROM CLASS JOIN COURSE ON CLASS.CRS_CODE = COURSE.CRS_CODE JOIN DEPARTMENT ON COURSE.DEPT_CODE = DEPARTMENT.DEPT_CODE WHERE DEPARTMENT.DEPT_NAME = 'Computer Info. Systems' AND COURSE.CRS_CREDIT = 4.0;",
+    "table_names": [
+      "CLASS",
+      "COURSE",
+      "DEPARTMENT",
+      "ENROLL",
+      "STUDENT"
+    ]
+  },
+  {
+    "id": 344,
+    "db_id": "hospital_1",
+    "question": "What is the name of the patient who underwent procedure 7 while staying in room 112?",
+    "sql": "SELECT Patient.Name FROM Patient JOIN Stay ON Patient.SSN = Stay.Patient JOIN Undergoes ON Stay.StayID = Undergoes.Stay WHERE Undergoes.Procedures = 7 AND Stay.Room = 112;",
+    "table_names": [
+      "Patient",
+      "Stay",
+      "Undergoes"
+    ]
+  },
+  {
+    "id": 224,
+    "db_id": "icfp_1",
+    "question": "Which country's institution has authored the highest number of unique papers?",
+    "sql": "SELECT country FROM Inst WHERE instID = (SELECT instID FROM Authorship GROUP BY instID ORDER BY COUNT(DISTINCT paperID) DESC LIMIT 1)",
+    "table_names": [
+      "Inst",
+      "Papers",
+      "Authorship"
+    ]
+  },
+  {
+    "id": 354,
+    "db_id": "hospital_1",
+    "question": "Which physicians were certified throughout the entire year of 2008 for the procedure 'Complete Walletectomy'?",
+    "sql": "SELECT Physician.Name FROM Physician JOIN Trained_In ON Physician.EmployeeID = Trained_In.Physician JOIN Procedures ON Trained_In.Treatment = Procedures.Code WHERE Procedures.Name = 'Complete Walletectomy' AND Trained_In.CertificationDate <= '2008-01-01' AND Trained_In.CertificationExpires >= '2008-12-01';",
+    "table_names": [
+      "Physician",
+      "Procedures",
+      "Trained_In"
+    ]
+  },
+  {
+    "id": 108,
+    "db_id": "small_bank_1",
+    "question": "Which customer(s) have a savings balance greater than the average savings balance, but a checking balance less than the average checking balance?",
+    "sql": "SELECT name FROM ACCOUNTS WHERE custid IN (SELECT custid FROM SAVINGS WHERE balance > (SELECT AVG(balance) FROM SAVINGS)) AND custid IN (SELECT custid FROM CHECKING WHERE balance < (SELECT AVG(balance) FROM CHECKING));",
+    "table_names": [
+      "ACCOUNTS",
+      "SAVINGS",
+      "CHECKING"
+    ]
+  },
+  {
+    "id": 41,
+    "db_id": "insurance_fnol",
+    "question": "What type of insurance policies did the customer named Jay Chou have, whose policies were closed between March 15, 2018 and March 25, 2018?",
+    "sql": "SELECT ap.policy_type_code FROM Customers c JOIN Customers_Policies cp ON c.Customer_ID = cp.Customer_ID JOIN Available_Policies ap ON cp.Policy_ID = ap.Policy_ID WHERE c.Customer_name = 'Jay Chou' AND cp.Date_Closed BETWEEN '2018-03-15' AND '2018-03-25';",
+    "table_names": [
+      "Customers",
+      "Available_Policies",
+      "Customers_Policies"
+    ]
+  },
+  {
+    "id": 705,
+    "db_id": "student_transcripts_tracking",
+    "question": "Which country does the student currently reside in who is enrolled in degree program 9 during semester 15?",
+    "sql": "SELECT a.country FROM Addresses a JOIN Students s ON s.current_address_id = a.address_id JOIN Student_Enrolment se ON se.student_id = s.student_id WHERE se.degree_program_id = 9 AND se.semester_id = 15;",
+    "table_names": [
+      "Addresses",
+      "Students",
+      "Student_Enrolment"
+    ]
+  },
+  {
+    "id": 684,
+    "db_id": "car_1",
+    "question": "Which car makers from country '4' produce models with the name containing 'corolla'?",
+    "sql": "SELECT DISTINCT cm.Maker FROM car_makers AS cm JOIN model_list AS ml ON cm.Id = ml.Maker JOIN car_names AS cn ON ml.Model = cn.Model WHERE cm.Country = '4' AND cn.Make LIKE '%corolla%';",
+    "table_names": [
+      "car_makers",
+      "model_list",
+      "car_names",
+      "cars_data"
+    ]
+  },
+  {
+    "id": 453,
+    "db_id": "college_3",
+    "question": "List the first name, last name, and rank of the faculty members who have a primary appointment with the Computer Science department and have their office located in room 224 of the NEB building.",
+    "sql": "SELECT f.Fname, f.Lname, f.Rank FROM Faculty f JOIN Member_of m ON f.FacID = m.FacID JOIN Department d ON m.DNO = d.DNO WHERE d.DName = 'Computer Science' AND m.Appt_Type = 'Primary' AND f.Room = '224' AND f.Building = 'NEB';",
+    "table_names": [
+      "Faculty",
+      "Department",
+      "Member_of"
+    ]
+  },
+  {
+    "id": 445,
+    "db_id": "entertainment_awards",
+    "question": "Which festivals awarded a 'Won' status to an artwork categorized as a 'Program Music/Variety Show'?",
+    "sql": "SELECT fd.Festival_Name FROM festival_detail fd JOIN nomination n ON fd.Festival_ID = n.Festival_ID JOIN artwork a ON n.Artwork_ID = a.Artwork_ID WHERE a.Type = 'Program Music/Variety Show' AND n.Result = 'Won';",
+    "table_names": [
+      "festival_detail",
+      "artwork",
+      "nomination"
+    ]
+  },
+  {
+    "id": 616,
+    "db_id": "city_record",
+    "question": "What is the average July temperature of cities with GDP above 500 that have hosted matches?",
+    "sql": "SELECT AVG(t.Jul) FROM temperature t JOIN hosting_city h ON t.City_ID = CAST(h.Host_City AS INTEGER) JOIN city c ON c.City_ID = t.City_ID WHERE c.GDP > 500;",
+    "table_names": [
+      "city",
+      "temperature",
+      "hosting_city"
+    ]
+  },
+  {
+    "id": 457,
+    "db_id": "college_3",
+    "question": "What is the average grade point of students majoring in 600 who come from the city with code 'PIT'?",
+    "sql": "SELECT AVG(G.gradepoint) FROM Enrolled_in AS E JOIN Gradeconversion AS G ON E.Grade = G.lettergrade JOIN Student AS S ON E.StuID = S.StuID WHERE S.Major = 600 AND S.city_code = 'PIT';",
+    "table_names": [
+      "Student",
+      "Enrolled_in",
+      "Gradeconversion"
+    ]
+  },
+  {
+    "id": 387,
+    "db_id": "club_1",
+    "question": "Which students from the city with city code 'BAL' are members of the 'Bootup Baltimore' club?",
+    "sql": "SELECT Student.Fname, Student.LName FROM Student JOIN Member_of_club ON Student.StuID = Member_of_club.StuID JOIN Club ON Member_of_club.ClubID = Club.ClubID WHERE Club.ClubName = 'Bootup Baltimore' AND Student.city_code = 'BAL';",
+    "table_names": [
+      "Student",
+      "Club",
+      "Member_of_club"
+    ]
+  },
+  {
+    "id": 402,
+    "db_id": "club_1",
+    "question": "What are the first and last names of students who are members of the 'Bootup Baltimore' club, live in city code 'BAL', and are younger than 20 years old?",
+    "sql": "SELECT Fname, LName FROM Student WHERE StuID IN (SELECT StuID FROM Member_of_club WHERE ClubID = (SELECT ClubID FROM Club WHERE ClubName = 'Bootup Baltimore')) AND city_code = 'BAL' AND Age < 20;",
+    "table_names": [
+      "Student",
+      "Club",
+      "Member_of_club"
+    ]
+  },
+  {
+    "id": 202,
+    "db_id": "news_report",
+    "question": "What events were hosted by English journalists?",
+    "sql": "SELECT e.Name FROM event e JOIN news_report nr ON e.Event_ID = nr.Event_ID JOIN journalist j ON nr.journalist_ID = j.journalist_ID WHERE j.Nationality = 'England' AND nr.Work_Type = 'Host';",
+    "table_names": [
+      "event",
+      "journalist",
+      "news_report"
+    ]
+  },
+  {
+    "id": 654,
+    "db_id": "architecture",
+    "question": "What are the names and locations of bridges designed by architects who have also designed a Bergmolen type of mill?",
+    "sql": "SELECT bridge.name AS bridge_name, bridge.location AS bridge_location FROM bridge JOIN architect ON bridge.architect_id = architect.id WHERE architect.id IN (SELECT architect_id FROM mill WHERE type = 'Bergmolen');",
+    "table_names": [
+      "architect",
+      "bridge",
+      "mill"
+    ]
+  },
+  {
+    "id": 255,
+    "db_id": "loan_1",
+    "question": "What is the loan amount of the 'Business' loan type borrowed by a customer with a savings account from a branch located in New York City?",
+    "sql": "SELECT loan.amount FROM loan JOIN customer ON loan.cust_ID = customer.cust_ID JOIN bank ON loan.branch_ID = bank.branch_ID WHERE customer.acc_type = 'saving' AND bank.city = 'New York City' AND loan.loan_type = 'Business'",
+    "table_names": [
+      "bank",
+      "customer",
+      "loan"
+    ]
+  },
+  {
+    "id": 523,
+    "db_id": "products_gen_characteristics",
+    "question": "What are the names of spices with the color green, and what are their associated characteristic names?",
+    "sql": "SELECT p.product_name, rc.color_description, c.characteristic_name FROM Products AS p JOIN Ref_Colors AS rc ON p.color_code = rc.color_code JOIN Characteristics AS c ON p.product_description = c.characteristic_type_code WHERE p.product_category_code = 'Spices' AND rc.color_description = 'green';",
+    "table_names": [
+      "Ref_Colors",
+      "Characteristics",
+      "Products",
+      "Product_Characteristics"
+    ]
+  },
+  {
+    "id": 489,
+    "db_id": "soccer_2",
+    "question": "Which colleges with enrollment greater than 10000 rejected players who have received a yellow card?",
+    "sql": "SELECT College.cName FROM College JOIN Tryout ON College.cName = Tryout.cName JOIN Player ON Tryout.pID = Player.pID WHERE Player.yCard = 'yes' AND Tryout.decision = 'no' AND College.enr > 10000;",
+    "table_names": [
+      "College",
+      "Player",
+      "Tryout"
+    ]
+  },
+  {
+    "id": 238,
+    "db_id": "icfp_1",
+    "question": "What is the institute name located in USA associated with author Weirich for the paper titled 'Nameless, Painless'?",
+    "sql": "SELECT Inst.name FROM Inst JOIN Authors ON Inst.country = 'USA' JOIN Papers ON Papers.title = 'Nameless, Painless' WHERE Authors.lname = 'Weirich';",
+    "table_names": [
+      "Inst",
+      "Authors",
+      "Papers",
+      "Authorship"
+    ]
+  },
+  {
+    "id": 71,
+    "db_id": "college_2",
+    "question": "What is the highest salary of an instructor from the Elec. Eng. department who advises a student having more than 120 credits?",
+    "sql": "SELECT MAX(instructor.salary) FROM instructor JOIN advisor ON instructor.ID = advisor.i_ID JOIN student ON advisor.s_ID = student.ID WHERE student.tot_cred > 120 AND instructor.dept_name = 'Elec. Eng.';",
+    "table_names": [
+      "instructor",
+      "student",
+      "advisor"
+    ]
+  },
+  {
+    "id": 611,
+    "db_id": "city_record",
+    "question": "Of the cities that hosted matches for the 1994 FIFA World Cup qualification competition, which city has the highest total GDP?",
+    "sql": "SELECT city.City, SUM(city.GDP) AS Total_GDP FROM city INNER JOIN hosting_city ON city.City_ID = CAST(hosting_city.Host_City AS INTEGER) INNER JOIN match ON hosting_city.Match_ID = match.Match_ID WHERE match.Competition = '1994 FIFA World Cup qualification' GROUP BY city.City ORDER BY Total_GDP DESC LIMIT 1;",
+    "table_names": [
+      "city",
+      "match",
+      "hosting_city"
+    ]
+  },
+  {
+    "id": 130,
+    "db_id": "cinema",
+    "question": "Which cinemas with a capacity greater than 500 are showing films directed by Bill Schreiner?",
+    "sql": "SELECT cinema.Name FROM cinema JOIN schedule ON cinema.Cinema_ID = schedule.Cinema_ID JOIN film ON schedule.Film_ID = film.Film_ID WHERE film.Directed_by = 'Bill Schreiner' AND cinema.Capacity > 500;",
+    "table_names": [
+      "film",
+      "cinema",
+      "schedule"
+    ]
+  },
+  {
+    "id": 144,
+    "db_id": "pilot_record",
+    "question": "Which pilots from the United States have operated aircraft that use diesel fuel propulsion?",
+    "sql": "SELECT DISTINCT p.Pilot_name FROM pilot p JOIN pilot_record pr ON p.Pilot_ID = pr.Pilot_ID JOIN aircraft a ON pr.Aircraft_ID = a.Aircraft_ID WHERE a.Fuel_Propulsion = 'Diesel' AND p.Nationality = 'United States';",
+    "table_names": [
+      "aircraft",
+      "pilot",
+      "pilot_record"
+    ]
+  },
+  {
+    "id": 53,
+    "db_id": "phone_1",
+    "question": "List the chip model names launched in or after 2004 along with their release year, WiFi support, and Bluetooth version, corresponding to phones having screens with exactly 256 vertical pixel resolution and supporting at least 4 hardware colors.",
+    "sql": "SELECT cm.Model_name, cm.Launch_year, cm.WiFi, cm.Bluetooth FROM chip_model cm JOIN phone p ON cm.Model_name = p.chip_model JOIN screen_mode sm ON p.screen_mode = sm.Graphics_mode WHERE cm.Launch_year >= 2004 AND RIGHT(sm.Pixels, 3) = '256' AND sm.Hardware_colours >= 4;",
+    "table_names": [
+      "chip_model",
+      "screen_mode",
+      "phone"
+    ]
+  },
+  {
+    "id": 64,
+    "db_id": "college_2",
+    "question": "Which courses in Cybernetics were taught during Spring 2008, and who were their instructors?",
+    "sql": "SELECT c.title, i.name FROM course c JOIN teaches t ON c.course_id = t.course_id JOIN instructor i ON t.ID = i.ID WHERE c.dept_name = 'Cybernetics' AND t.year = 2008 AND t.semester = 'Spring';",
+    "table_names": [
+      "course",
+      "instructor",
+      "teaches"
+    ]
+  },
+  {
+    "id": 649,
+    "db_id": "tracking_orders",
+    "question": "Find the order IDs of orders currently in 'Packing' status which contain 'food' items with the 'Payed' order item status.",
+    "sql": "SELECT DISTINCT o.order_id FROM Orders AS o INNER JOIN Order_Items AS oi ON o.order_id = oi.order_id INNER JOIN Products AS p ON oi.product_id = p.product_id WHERE o.order_status = 'Packing' AND p.product_name = 'food' AND oi.order_item_status = 'Payed';",
+    "table_names": [
+      "Orders",
+      "Products",
+      "Order_Items"
+    ]
+  },
+  {
+    "id": 493,
+    "db_id": "customers_and_addresses",
+    "question": "Which customer orders placed by customer 418 included products named 'film'?",
+    "sql": "SELECT CO.Order_ID FROM Customer_Orders CO JOIN Order_Items OI ON CO.Order_ID = OI.Order_ID JOIN Products P ON OI.Product_ID = P.Product_ID WHERE P.Product_Name = 'film' AND CO.Customer_ID = 418;",
+    "table_names": [
+      "Products",
+      "Customer_Orders",
+      "Order_Items"
+    ]
+  },
+  {
+    "id": 361,
+    "db_id": "hospital_1",
+    "question": "List the names of physicians whose primary affiliation is with the Surgery department.",
+    "sql": "SELECT Physician.Name FROM Physician JOIN Affiliated_With ON Physician.EmployeeID = Affiliated_With.Physician JOIN Department ON Affiliated_With.Department = Department.DepartmentID WHERE Department.Name = 'Surgery' AND Affiliated_With.PrimaryAffiliation = 1;",
+    "table_names": [
+      "Physician",
+      "Department",
+      "Affiliated_With"
+    ]
+  }
+]
