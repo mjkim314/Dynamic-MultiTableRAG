@@ -53,4 +53,4 @@ $$Reward = EX + \beta PM - \mu Tok(q, b; f)$$
 
 * **Team 8:** 권준호, 김민재, 박영진
 * **Base Framework:** [TableRAG: Million-token table understanding with language models (NeurIPS 2024)](https://arxiv.org/abs/2410.04739)
-* **Dataset:** [Spider](https://github.com/taoyds/spider), [MMQA](https://github.com/Salesforce/MMQA)
+* **Dataset:** [Spider](https://yale-lily.github.io/spider), [MMQA](https://github.com/deepaknlp/MMQA?tab=readme-ov-file)
